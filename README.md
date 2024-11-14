@@ -1,4 +1,4 @@
-# First Let's move to Docker Python Quote Bot!
+# First Let's move to Docker Python Quote
 
 >```docker build -t python-project .```
 >
