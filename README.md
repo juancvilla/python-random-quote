@@ -14,7 +14,7 @@ In the following files, we create a docker image, test the docker image and then
 >
 >```docker image ls```
 >
->```docker push juancvilla/python-api-project:python-project
+>```docker push juancvilla/python-api-project:python-project```
 
 ## Finally, to test docker image try:
 
