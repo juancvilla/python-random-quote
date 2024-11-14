@@ -1,17 +1,21 @@
-# Let's move to Docker and then move to Openshift Python Quote Bot!
+# First Let's move to Docker Python Quote Bot!
 
-This repository will get you started with building a quote bot in Python. It's meant to be used along with the [Learning Lab](https://lab.github.com) intro to Python.
+>```docker build -t python-project .```
+>
+>```docker image list```
+>
+>```docker run -p 9001:9001 python-project```
+>
+>```docker login```
+>
+>```docker tag python-project juancvilla/python-api-project:python-project```
+>
+>```docker image ls```
+>
+>```docker push juancvilla/python-api-project:python-project
 
-When complete, you'll be able to grab random quotes from the command line, like this:
+## Finally, to test docker image try:
 
-> **$** python get-quote.py
-> 
-> Keep it logically awesome
-> 
-> **$** python get-quote.py
-> 
-> Speak like a human
-
-## Start the Tutorial
+```docker run -p 9001:9001 juancvilla/python-api-project:python-project```
 
 fin
