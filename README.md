@@ -1,5 +1,7 @@
 # First Let's move to Docker Python Quote
 
+In the following files, we create a docker image, test the docker image and then publish docker image on Hub
+
 >```docker build -t python-project .```
 >
 >```docker image list```
