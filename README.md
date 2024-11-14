@@ -1,17 +1,47 @@
-# Let's move to Docker and then move to Openshift Python Quote Bot!
+# Let's move Docker to Openshift Python Quote Bot!
 
-This repository will get you started with building a quote bot in Python. It's meant to be used along with the [Learning Lab](https://lab.github.com) intro to Python.
+Create a helm solution with following command:
 
-When complete, you'll be able to grab random quotes from the command line, like this:
+```helm create python-api-project```
 
-> **$** python get-quote.py
+Edit the file values.yaml and change:
+
+>(Line 10)   repository: nginx   --->   juancvilla/python-api-project:python-project
+>
+>(Line 55)   type: ClusterIP   --->   type: NodePort
+
+Edit the file Chart.yaml and change:
+
+>(Line 24)   appVersion: "1.16.0"   --->   # appVersion: "1.16.0"
+
+Edit the file template/deployment.yaml
+
+>   image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+>
+>   --->
+>
+>   image: "{{ .Values.image.repository }}"
+>
+>   containerPort: {{ .Values.service.port }}   --->   containerPort: 9001
+>
+>(delete line) livenessProbe:
 > 
-> Keep it logically awesome
-> 
-> **$** python get-quote.py
-> 
-> Speak like a human
+>(delete line)   {{- toYaml .Values.livenessProbe | nindent 12 }}
+>
+>(delete line) readinessProbe:
+>
+>(delete line)   {{- toYaml .Values.readinessProbe | nindent 12 }}
 
-## Start the Tutorial
+Instala en Openshift la solucion Helm con el comando:
+
+```helm install mypython python-api-project```
+
+```oc get svc```
+
+```oc expose svc mypython-python-api-project```
+
+```oc get route```
+
+```curl http://mypython-python-api-project-jvillarroelquintec-dev.apps.sandbox-m3.1530.p1.openshiftapps.com/quote```
 
 fin
