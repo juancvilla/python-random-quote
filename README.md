@@ -2,7 +2,8 @@
 
 Create a directory for helm hook:
 
-```mkdir python-api-project/templates/hooks```
+```bash
+mkdir python-api-project/templates/hooks```
 
 To install a pod that waits 10 seconds before to execute python-project. Edit the file pre-install.yml and change:
 
