@@ -1,47 +1,40 @@
-# Let's move Docker to Openshift Python Quote Bot!
+# Understanding hook in Helm!
 
-Create a helm solution with following command:
+Create a directory for helm hook:
 
-```helm create python-api-project```
+```mkdir python-api-project/templates/hooks```
 
-Edit the file values.yaml and change:
+To install a pod that waits 10 seconds before to execute python-project. Edit the file pre-install.yml and change:
 
->(Line 10)   repository: nginx   --->   juancvilla/python-api-project:python-project
->
->(Line 55)   type: ClusterIP   --->   type: NodePort
-
-Edit the file Chart.yaml and change:
-
->(Line 24)   appVersion: "1.16.0"   --->   # appVersion: "1.16.0"
-
-Edit the file template/deployment.yaml
-
->   image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
->
->   --->
->
->   image: "{{ .Values.image.repository }}"
->
->   containerPort: {{ .Values.service.port }}   --->   containerPort: 9001
->
->(delete line) livenessProbe:
-> 
->(delete line)   {{- toYaml .Values.livenessProbe | nindent 12 }}
->
->(delete line) readinessProbe:
->
->(delete line)   {{- toYaml .Values.readinessProbe | nindent 12 }}
+```---```
+<br>```apiVersion: batch/v1```
+<br>```kind: Job```
+<br>```metadata:```
+<br>```  name: "{{ include "python-api-project.fullname" . }}-pre-install-job-hook"```
+<br>```  labels:```
+<br>```    {{- include "python-api-project.labels" . | nindent 4 }}```
+<br>```  annotations:```
+<br>```    "helm.sh/hook": "pre-install"```
+<br>```    "help.sh/hook-weith": "0"```
+<br>```    "help.sh/hook-delete-policy": hook-succeded```
+<br>```spec:```
+<br>```  template:```
+<br>```    spec:```
+<br>```      containers:```
+<br>```      - name: pre-install```
+<br>```        image: busybox```
+<br>```        imagePullPolicy: IfNotPresent```
+<br>```        command: ['sh', '-c', 'echo pre-install Pod is Running ; sleep 10']```
+<br>```      restartPolicy: OnFailure```
+<br>```      terminationGracePeriodSeconds: 0```
+<br>```  backoffLimit: 3```
+<br>```  completions: 1```
+<br>```  parallelism: 1```
 
 Instala en Openshift la solucion Helm con el comando:
 
 ```helm install mypython python-api-project```
 
-```oc get svc```
-
-```oc expose svc mypython-python-api-project```
-
-```oc get route```
-
-```curl http://mypython-python-api-project-jvillarroelquintec-dev.apps.sandbox-m3.1530.p1.openshiftapps.com/quote```
+Before to execute python project, wait 10 seconds:
 
 fin
