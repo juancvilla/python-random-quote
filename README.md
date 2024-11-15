@@ -35,6 +35,6 @@ Instala en Openshift la solucion Helm con el comando:
 
 ```helm install mypython python-api-project```
 
-Before to execute python project, wait 10 seconds:
+Before to install python project, Executes pod for wait 10 seconds:
 
 fin
